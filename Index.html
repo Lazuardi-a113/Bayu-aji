@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan - SMAN 7 Depok</title>
+    <style>
+        /* Latar belakang polkadot */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, white 10%, #00c0ff 10%) 0 0 / 20px 20px;
+            color: black;
+        }
+
+        /* Container utama */
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header dengan font Times New Roman */
+        h1, h2 {
+            text-align: center;
+            font-family: "Times New Roman", Times, serif;
+            color: #00c0ff;
+        }
+
+        /* Tabel */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            background: white;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Tombol */
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Perpustakaan SMAN 7 Depok</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Kategori</th>
+                    <th>Jumlah Buku</th>
+                    <th>Total Halaman</th>
+                </tr>
+            </thead>
+            <tbody id="bookTable">
+                <!-- Data akan ditambahkan melalui JavaScript -->
+            </tbody>
+        </table>
+        <button id="calculateButton">Hitung Total Buku & Halaman</button>
+        <h2>Total Buku: <span id="totalBooks">0</span></h2>
+        <h2>Total Halaman: <span id="totalPages">0</span></h2>
+    </div>
+
+    <script>
+        // Data awal dengan total buku 360, termasuk kategori baru
+        const bookData = [
+            { category: "Buku Bahasa Indonesia", count: 100 },
+            { category: "Buku Bahasa Inggris", count: 50 },
+            { category: "Buku Bahasa Sunda", count: 40 },
+            { category: "Buku Bahasa Jepang", count: 30 },
+            { category: "Buku Sejarah", count: 60 },
+            { category: "Buku PPKn", count: 40 },
+            { category: "Buku Matematika", count: 40 }
+        ];
+        const pagesPerBook = 76;
+
+        // Ambil elemen DOM
+        const bookTable = document.getElementById("bookTable");
+        const totalBooksElement = document.getElementById("totalBooks");
+        const totalPagesElement = document.getElementById("totalPages");
+        const calculateButton = document.getElementById("calculateButton");
+
+        // Fungsi untuk menampilkan data ke tabel
+        function displayBookData() {
+            bookData.forEach((book) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${book.category}</td>
+                    <td>${book.count}</td>
+                    <td>${book.count * pagesPerBook}</td>
+                `;
+                bookTable.appendChild(row);
+            });
+        }
+
+        // Fungsi untuk menghitung total buku dan halaman
+        function calculateTotals() {
+            let totalBooks = 0;
+            let totalPages = 0;
+
+            bookData.forEach((book) => {
+                totalBooks += book.count;
+                totalPages += book.count * pagesPerBook;
+            });
+
+            totalBooksElement.textContent = totalBooks;
+            totalPagesElement.textContent = totalPages;
+        }
+
+        // Event Listener
+        calculateButton.addEventListener("click", calculateTotals);
+
+        // Tampilkan data saat halaman dimuat
+        displayBookData();
+    </script>
+</body>
+</html>
